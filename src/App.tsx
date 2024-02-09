@@ -9,6 +9,7 @@ import { AssetSelector } from "./components/TransferForm/AssetSelector/AssetSele
 import { TransferForm } from "./components/TransferForm/TransferForm";
 import { skipFetcher } from "./utils/skipFetcher";
 import { fetchTransferChannels } from "./utils/fetchChannels/fetchChannels";
+import { fetchFullTokenBalances } from "./utils/fetchBalances/fetchBalances";
 
 function App() {
   useEffect(() => {
@@ -23,10 +24,14 @@ function App() {
       //     )
       //   )
       //   .then(console.log);
-
-      fetchTransferChannels("migaloo", "stargaze").then((transChans) =>
-        console.log("matching transfer channels", transChans)
-      );
+      // fetchTransferChannels("migaloo", "stargaze").then((transChans) =>
+      //   console.log("matching transfer channels", transChans)
+      // );
+      fetchFullTokenBalances(
+        "migaloo",
+        "migaloo-1",
+        "migaloo1ewdttrv2ph7762egx4n2309h3m9r4z9pxsg48n"
+      ).then(console.log);
     })();
   }, []);
 

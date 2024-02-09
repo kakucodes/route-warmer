@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
 } from "grommet";
+import { Refresh } from "grommet-icons";
 
 export const AssetSelector = () => {
   return (
@@ -31,6 +32,7 @@ export const AssetSelector = () => {
         <Box width="50%">
           <TextInput textAlign="end" placeholder="0" />
         </Box>
+        <Button icon={<Refresh size="small" />} hoverIndicator />
       </CardBody>
       <CardFooter pad={{ horizontal: "small", vertical: "xsmall" }}>
         <Text size="small">Balance: 0.0000</Text>

@@ -13,7 +13,7 @@ export const ChannelSelector = () => {
         pad={{ horizontal: "small", vertical: "xsmall" }}
         direction="row"
       >
-        <Select options={["channel-1"]} />{" "}
+        <Select options={["channel-1"]} />
         <Button icon={<Refresh size="small" />} hoverIndicator />
       </CardBody>
     </Card>
