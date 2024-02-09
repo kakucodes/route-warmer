@@ -1,4 +1,5 @@
 import { Button, Card, CardBody, CardHeader, Select, Text } from "grommet";
+import { Refresh } from "grommet-icons";
 
 export const ChannelSelector = () => {
   return (
@@ -11,9 +12,9 @@ export const ChannelSelector = () => {
       <CardBody
         pad={{ horizontal: "small", vertical: "xsmall" }}
         direction="row"
-        gap="xsmall"
       >
-        <Select options={["channel-1"]} />
+        <Select options={["channel-1"]} />{" "}
+        <Button icon={<Refresh size="small" />} hoverIndicator />
       </CardBody>
     </Card>
   );
