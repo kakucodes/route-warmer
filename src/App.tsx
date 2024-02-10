@@ -24,14 +24,14 @@ function App() {
       //     )
       //   )
       //   .then(console.log);
-      // fetchTransferChannels("migaloo", "stargaze").then((transChans) =>
+      // fetchTransferChannels("osmosis", "juno").then((transChans) =>
       //   console.log("matching transfer channels", transChans)
       // );
-      fetchFullTokenBalances(
-        "migaloo",
-        "migaloo-1",
-        "migaloo1ewdttrv2ph7762egx4n2309h3m9r4z9pxsg48n"
-      ).then(console.log);
+      // fetchFullTokenBalances(
+      //   "osmosis",
+      //   "osmosis-1",
+      //   "osmo1ewdttrv2ph7762egx4n2309h3m9r4z9prljly0"
+      // ).then(console.log);
     })();
   }, []);
 

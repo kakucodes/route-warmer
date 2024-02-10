@@ -2,8 +2,19 @@ import { P, match } from "ts-pattern";
 import { COSMOS_DIRECTORY_REST } from "../constants";
 import type { Balance, BalanceResponse } from "./fetchBalances.d";
 import { skipFetcher } from "../skipFetcher";
+import { paths } from "../skipApi.generated";
 
 const DENOMS_FETCH_LIMIT = 75;
+
+export type AugmentedBalance = {
+  balance: bigint;
+  chainDenom: string;
+  assetInfo: NonNullable<
+    NonNullable<
+      paths["/v1/fungible/assets_from_source"]["post"]["responses"]["200"]["content"]["application/json"]["dest_assets"]
+    >[string]["assets"]
+  >[number];
+};
 
 /**
  * Fetches the wallet balances for a wallet on a chain and collates the asset info for each token
@@ -36,7 +47,7 @@ export const fetchFullTokenBalances = async (
 
   return assetInfo.map((denomInfo, i) => ({
     assetInfo: denomInfo.asset,
-    balance: basicBalances[i].amount,
+    balance: BigInt(basicBalances[i].amount),
     chainDenom: basicBalances[i].denom,
   }));
 };

@@ -7,8 +7,8 @@ export type ChannelsResponse =
     };
 
 export interface Channel {
-  state: State;
-  ordering: Ordering;
+  state: ChannelState;
+  ordering: ChannelOrdering;
   counterparty: Counterparty;
   connection_hops: string[];
   version: string;
@@ -21,16 +21,9 @@ interface Counterparty {
   channel_id: string;
 }
 
-enum Ordering {
-  OrderOrdered = "ORDER_ORDERED",
-  OrderUnordered = "ORDER_UNORDERED",
-}
+export type ChannelOrdering = "ORDER_ORDERED" | "ORDER_UNORDERED";
 
-enum State {
-  StateInit = "STATE_INIT",
-  StateOpen = "STATE_OPEN",
-  StateTryopen = "STATE_TRYOPEN",
-}
+export type ChannelState = "STATE_INIT" | "STATE_OPEN" | "STATE_TRYOPEN";
 
 interface Height {
   revision_number: string;
