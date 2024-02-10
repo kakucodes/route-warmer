@@ -1,27 +1,30 @@
-import { useChains, useManager, useWalletClient } from "@cosmos-kit/react";
+import { useChains } from "@cosmos-kit/react";
 import { Box, Button, Text, Image, Spinner } from "grommet";
 import { Connect, Logout } from "grommet-icons";
-import { get } from "http";
-import { useEffect, useState } from "react";
+
+import { useFetchChains } from "../../hooks/useFetchChains";
 
 export const ConnectButton = () => {
-  const chains = useChains(
-    ["cosmoshub", "osmosis", "stargaze", "juno", "akash", "neutron", "noble"],
-    true
-  );
+  const { data: skipChains } = useFetchChains(false);
+
+  const allChains = skipChains
+    ?.flatMap(({ chain_name }) => (chain_name ? [chain_name] : []))
+    // having errors on a handfull of chains here. i suspect it's because of naming discrepancies
+    // TODO: no time to dig in now, but should be looked at later
+    .filter(
+      (name) =>
+        !["lum", "dymension", "secret", "ununifi", "xpla"].includes(name)
+    );
+
+  const chains = useChains(allChains || [], true);
   const connected = Object.values(chains).every(
     (chain) => chain.isWalletConnected
   );
 
-  const {
-    connect,
-    openView,
-    disconnect,
-    address,
-    username,
-    wallet,
-    isWalletConnecting,
-  } = chains.cosmoshub;
+  if (!allChains) return <Spinner />;
+
+  const { connect, disconnect, address, username, wallet, isWalletConnecting } =
+    chains.cosmoshub;
 
   return connected ? (
     <Box direction="row" gap="xsmall" alignContent="center">

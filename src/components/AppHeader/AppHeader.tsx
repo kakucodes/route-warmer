@@ -1,4 +1,4 @@
-import { Box, Button, Header, Image, PageHeader, Text } from "grommet";
+import { Box, Header, Image, Text } from "grommet";
 import { ConnectButton } from "../ConnectButton/ConnectButton";
 
 export const AppHeader = () => {

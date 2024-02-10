@@ -34,7 +34,6 @@ export const fetchChannels = async (chainName: string, key?: string) =>
             console.error("Failed to fetch channels", err);
             return Promise.resolve(undefined);
           })
-
           .exhaustive()
     );
 
@@ -50,16 +49,8 @@ const toCounterpartyChannelsObj = (
 export const findCommonTransferChannels = (xs: Channel[], ys: Channel[]) => {
   // obj that's keyed by counterparty channel ids so we can easily compute the union
   const ysCounterpartyChannelsObj = ys
-
     // convert to object for easy lookup
     .reduce(toCounterpartyChannelsObj, {});
-
-  console.log(ysCounterpartyChannelsObj, "ysCounterpartyChannelsObj");
-  console.log(
-    xs,
-    xs.find(({ channel_id }) => channel_id === "channel-44"),
-    "xs"
-  );
 
   return xs.filter(
     ({ channel_id, counterparty }) =>
@@ -71,7 +62,6 @@ export const findCommonTransferChannels = (xs: Channel[], ys: Channel[]) => {
 export const fetchTransferChannels = (chainAName: string, chainBName: string) =>
   Promise.all([fetchChannels(chainAName), fetchChannels(chainBName)]).then(
     ([chainAChannels, chainBChannels]) => {
-      console.log(chainAChannels, chainBChannels, "loaded");
       return match([chainAChannels, chainBChannels] as const)
         .with(
           P.union([P.nullish, P._], [P._, P.nullish]),

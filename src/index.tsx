@@ -3,29 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ChainProvider } from "@cosmos-kit/react";
-import { chains, assets } from "chain-registry";
-import { wallets as keplrWallets } from "@cosmos-kit/keplr";
-import { wallets as cosmostationWallets } from "@cosmos-kit/cosmostation";
-import { wallets as leapWallets } from "@cosmos-kit/leap";
-import "@interchain-ui/react/styles";
-import { Grommet, grommet } from "grommet";
+import { Providers } from "./Providers";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <ChainProvider
-      chains={chains} // supported chains
-      assetLists={assets} // supported asset lists
-      wallets={[...keplrWallets, ...cosmostationWallets, ...leapWallets]} // supported wallets
-      // walletConnectOptions={} // required if `wallets` contains mobile wallets
-    >
-      <Grommet theme={grommet} themeMode="dark" full>
-        <App />
-      </Grommet>
-    </ChainProvider>
+    <Providers>
+      <App />
+    </Providers>
   </React.StrictMode>
 );
 

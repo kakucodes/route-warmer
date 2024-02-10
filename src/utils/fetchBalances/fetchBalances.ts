@@ -45,11 +45,17 @@ export const fetchFullTokenBalances = async (
       })
     ).data.origin_assets || [];
 
-  return assetInfo.map((denomInfo, i) => ({
-    assetInfo: denomInfo.asset,
-    balance: BigInt(basicBalances[i].amount),
-    chainDenom: basicBalances[i].denom,
-  }));
+  return assetInfo
+    .map((denomInfo, i) => ({
+      assetInfo: denomInfo.asset,
+      balance: BigInt(basicBalances[i].amount),
+      chainDenom: basicBalances[i].denom,
+    }))
+    .sort((a, b) =>
+      (a.assetInfo?.recommended_symbol || "").localeCompare(
+        b.assetInfo?.recommended_symbol || ""
+      )
+    );
 };
 
 /**
