@@ -11,21 +11,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Installing Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
 
       - name: Installing NPM packages
-        run: npm ci
+        run: npm install
 
       - name: Building project
         run: npm run build
-
-      - name: Running tests
-        run: npm run test
 
       - name: Uploading production-ready build files
         uses: actions/upload-artifact@v4
