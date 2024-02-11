@@ -29,7 +29,7 @@ export const ChannelSelector = () => {
 
   useEffect(() => {
     console.log("resetting channel");
-    setValue("channel", undefined, { shouldValidate: true });
+    setValue("channel", "", { shouldValidate: true });
   }, [sourceChain, destChain, setValue]);
 
   const {

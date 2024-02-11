@@ -143,12 +143,9 @@ export const AssetSelector = () => {
                   onBlur={onBlur}
                   ref={ref}
                   name={name}
-                  value={value?.denom}
+                  value={value}
                   onChange={(e: { value: AugmentedBalance }) => {
                     setValue("asset.denom", e.value.chainDenom, {
-                      shouldValidate: true,
-                    });
-                    setValue("asset.amount", undefined, {
                       shouldValidate: true,
                     });
                   }}
@@ -170,7 +167,10 @@ export const AssetSelector = () => {
                   textAlign="end"
                   placeholder="0"
                   disabled={disabled}
-                  value={value?.amount}
+                  value={value}
+                  onBlur={onBlur}
+                  ref={ref}
+                  name={name}
                   onChange={(e) =>
                     setValue("asset.amount", Number(e.target.value) || "", {
                       shouldValidate: true,
@@ -205,6 +205,11 @@ export const AssetSelector = () => {
               style={{ fontFamily: "monospace" }}
               textAlign="end"
               size="small"
+              onClick={() =>
+                setValue("asset.amount", (1_000_000).toString(), {
+                  shouldValidate: true,
+                })
+              }
             >
               {applyAmountExponent(6, amount)} e06
             </Text>
@@ -214,6 +219,13 @@ export const AssetSelector = () => {
               style={{ fontFamily: "monospace" }}
               textAlign="end"
               size="small"
+              onClick={() =>
+                setValue(
+                  "asset.amount",
+                  (1_000_000_000_000_000_000).toString(),
+                  { shouldValidate: true }
+                )
+              }
             >
               {applyAmountExponent(18, amount)} e18
             </Text>

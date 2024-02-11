@@ -6,6 +6,7 @@ import { wallets as leapWallets } from "@cosmos-kit/leap";
 import "@interchain-ui/react/styles";
 import { Grommet, grommet } from "grommet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GasPrice } from "@cosmjs/stargate";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient();
@@ -16,6 +17,11 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         chains={[...chains]} // supported chains
         assetLists={assets} // supported asset lists
         wallets={[...keplrWallets, ...cosmostationWallets, ...leapWallets]} // supported wallets
+        signerOptions={{
+          signingStargate: (chain) => ({
+            gasPrice: GasPrice.fromString("0.025uosmo"),
+          }),
+        }}
         // walletConnectOptions={} // required if `wallets` contains mobile wallets
       >
         <Grommet theme={grommet} themeMode="dark" full>
