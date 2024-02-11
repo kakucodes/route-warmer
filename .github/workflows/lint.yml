@@ -3,9 +3,7 @@ name: Lint
 on:
   pull_request:
     branches: main
-  push:
-    branches:
-      - main
+
 jobs:
   eslint:
     runs-on: ubuntu-latest
