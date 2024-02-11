@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/route-warmer/static/css/main.4892d4c9.css",
+    "main.js": "/route-warmer/static/js/main.72cbcd36.js",
+    "static/js/64.435e1cc6.chunk.js": "/route-warmer/static/js/64.435e1cc6.chunk.js",
+    "static/js/228.570867ab.chunk.js": "/route-warmer/static/js/228.570867ab.chunk.js",
+    "static/js/592.17e255e2.chunk.js": "/route-warmer/static/js/592.17e255e2.chunk.js",
+    "static/media/axios.cjs": "/route-warmer/static/media/axios.5cdcf59e4b6a285aeb16.cjs",
+    "index.html": "/route-warmer/index.html",
+    "main.4892d4c9.css.map": "/route-warmer/static/css/main.4892d4c9.css.map",
+    "main.72cbcd36.js.map": "/route-warmer/static/js/main.72cbcd36.js.map",
+    "64.435e1cc6.chunk.js.map": "/route-warmer/static/js/64.435e1cc6.chunk.js.map",
+    "228.570867ab.chunk.js.map": "/route-warmer/static/js/228.570867ab.chunk.js.map",
+    "592.17e255e2.chunk.js.map": "/route-warmer/static/js/592.17e255e2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4892d4c9.css",
+    "static/js/main.72cbcd36.js"
+  ]
+}

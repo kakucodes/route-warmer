@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkwarm_route_ui=self.webpackChunkwarm_route_ui||[]).push([[228],{25848:(r,t,e)=>{e.d(t,{NameService:()=>i});var s=e(68376);class i{constructor(r,t){(0,s.c)(this,"client",void 0),(0,s.c)(this,"registry",void 0),this.client=r,this.registry=t}async resolveName(r){try{const{contract:t,getQueryMsg:e}=this.registry;return await this.client.queryContractSmart(t,e(r))}catch(e){var t;return void(null===(t=console)||void 0===t||t.error(e))}}}}}]);
+//# sourceMappingURL=228.570867ab.chunk.js.map
