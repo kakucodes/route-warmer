@@ -10,13 +10,10 @@ import {
 } from "grommet";
 import { NetworkSelector } from "./NetworkSelector/NetworkSelector";
 import { AssetSelector } from "./AssetSelector/AssetSelector";
-
 import { ChannelSelector } from "./ChannelSelector/ChannelSelector";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { ChainInfo } from "../../hooks/useFetchChains";
-
 import { TransferInputs, transferFormSchema } from "./formTypes";
 import { useEnableChains } from "./useEnableChains";
 import { useBroadcastTransfer } from "./useBroadcastTransfer";

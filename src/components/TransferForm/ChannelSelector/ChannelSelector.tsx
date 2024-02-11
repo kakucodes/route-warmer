@@ -28,7 +28,8 @@ export const ChannelSelector = () => {
   const { chainName: destChain } = watch("destinationChain");
 
   useEffect(() => {
-    console.log("resetting channel");
+    // when the source or destination chain changes, reset the channel
+    // to avoid accidentally keeping an invalid channel
     setValue("channel", "", { shouldValidate: true });
   }, [sourceChain, destChain, setValue]);
 
@@ -132,7 +133,6 @@ export const ChannelSelector = () => {
               onClose={() => setChannelSearch(undefined)}
               {...field}
               onChange={(e: { value: Channel }) =>
-                // field.onChange(e.value.channel_id)
                 setValue("channel", e.value.channel_id, {
                   shouldValidate: true,
                 })

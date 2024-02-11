@@ -23,7 +23,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             gasPrice: GasPrice.fromString("0.025uosmo"),
           }),
         }}
-        // walletConnectOptions={} // required if `wallets` contains mobile wallets
       >
         <Grommet theme={grommet} themeMode="dark" full>
           <TxHistoryProvider>{children}</TxHistoryProvider>

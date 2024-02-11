@@ -1,4 +1,5 @@
 import { Box, Header, Image, Text } from "grommet";
+import { WalletConnectionInfo } from "../WalletConnectionInfo/WalletConnectionInfo";
 
 export const AppHeader = () => {
   return (
@@ -23,6 +24,7 @@ export const AppHeader = () => {
           </Text>
         </Header>
       </Box>
+      <WalletConnectionInfo />
     </Box>
   );
 };

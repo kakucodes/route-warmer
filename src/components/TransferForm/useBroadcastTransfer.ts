@@ -25,6 +25,8 @@ export const useBroadcastTransfer = ({
       if (sourceChainUserAddress && destinationChainUserAddress) {
         const client = await getSigningClient();
 
+        // Get the current block height and block so we can set a timeout height
+        // when we make the actual transfer message
         const currentHeight = await client.getHeight();
         const currentBlock = await client.getBlock(currentHeight);
 
@@ -50,6 +52,7 @@ export const useBroadcastTransfer = ({
         );
 
         if (broadcast.code === 0) {
+          // reset the form if the tx was successful
           setValue(
             "asset",
             { denom: "", amount: "0" },

@@ -5,7 +5,7 @@ import { formatDenomName } from "../../utils/formatDenomName";
 
 export const TxHistorySidebar = () => {
   const { txHistory, clearHistory } = useTxHistory();
-  console.log(txHistory);
+
   return (
     <Sidebar
       responsive

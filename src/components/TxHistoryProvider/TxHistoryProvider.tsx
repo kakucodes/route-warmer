@@ -49,6 +49,10 @@ export const TxHistoryProvider = ({ children }: { children: ReactNode }) => {
       : []
   );
 
+  /**
+   * Records a transaction to the tx history so that
+   * it can be displayed in the TxHistorySidebar
+   */
   const recordTx = useCallback(
     (tx: TxHistory) => {
       console.log("Recording tx", tx);
@@ -58,6 +62,9 @@ export const TxHistoryProvider = ({ children }: { children: ReactNode }) => {
     [txHistory]
   );
 
+  /**
+   * Clears the tx history and removes it from local storage
+   */
   const clearHistory = useCallback(() => {
     setTxHistory([]);
     localStorage.setItem(TX_HISTORY_KEY, JSON.stringify([]));
