@@ -18,6 +18,7 @@ import { match } from "ts-pattern";
 import { Controller, useFormContext } from "react-hook-form";
 import { useChain } from "@cosmos-kit/react";
 import { useFetchBalances } from "../../../hooks/useFetchBalances";
+import { formatDenomName } from "../../../utils/formatDenomName";
 
 /**
  * takes an expontent and an amount of utoken/atoken and formats the number for readability
@@ -73,24 +74,7 @@ export const AssetSelector = () => {
       return (
         <Box pad="xsmall">
           <Box direction="row" gap="xsmall" justify="between">
-            <Text color="disabled">
-              {match(chainDenom)
-                .when(
-                  (denom) => denom.startsWith("ibc/"),
-                  (ibcDenom) => `ibc..${ibcDenom.slice(-4)}`
-                )
-                .when(
-                  (denom) =>
-                    /^factory\/[a-zA-Z0-9]+1[a-zA-Z0-9]+\/[a-zA-Z0-9]+$/.test(
-                      denom
-                    ),
-                  (factoryDenom) =>
-                    `factory/..${factoryDenom.split("/")?.[1].slice(-5)}/${
-                      factoryDenom.split("/")[2]
-                    }`
-                )
-                .otherwise(() => chainDenom)}
-            </Text>
+            <Text color="disabled">{formatDenomName(chainDenom)}</Text>
             <Text size="small">{assetInfo?.recommended_symbol}</Text>
           </Box>
 
@@ -200,36 +184,31 @@ export const AssetSelector = () => {
         pad={{ horizontal: "small", vertical: "xsmall" }}
       >
         <Box>
-          {amount && (
-            <Text
-              style={{ fontFamily: "monospace" }}
-              textAlign="end"
-              size="small"
-              onClick={() =>
-                setValue("asset.amount", (1_000_000).toString(), {
-                  shouldValidate: true,
-                })
-              }
-            >
-              {applyAmountExponent(6, amount)} e06
-            </Text>
-          )}
-          {amount && (
-            <Text
-              style={{ fontFamily: "monospace" }}
-              textAlign="end"
-              size="small"
-              onClick={() =>
-                setValue(
-                  "asset.amount",
-                  (1_000_000_000_000_000_000).toString(),
-                  { shouldValidate: true }
-                )
-              }
-            >
-              {applyAmountExponent(18, amount)} e18
-            </Text>
-          )}
+          <Text
+            style={{ fontFamily: "monospace" }}
+            textAlign="end"
+            size="small"
+            onClick={() =>
+              setValue("asset.amount", (1_000_000).toString(), {
+                shouldValidate: true,
+              })
+            }
+          >
+            {applyAmountExponent(6, amount)} e06
+          </Text>
+
+          <Text
+            style={{ fontFamily: "monospace" }}
+            textAlign="end"
+            size="small"
+            onClick={() =>
+              setValue("asset.amount", (1_000_000_000_000_000_000).toString(), {
+                shouldValidate: true,
+              })
+            }
+          >
+            {applyAmountExponent(18, amount)} e18
+          </Text>
         </Box>
       </CardFooter>
     </Card>

@@ -2,6 +2,7 @@ import { Box, Page, PageContent, Sidebar, Text } from "grommet";
 import { AppHeader } from "./components/AppHeader/AppHeader";
 
 import { TransferForm } from "./components/TransferForm/TransferForm";
+import { TxHistorySidebar } from "./components/TxHistorySidebar/TxHistorySidebar";
 
 function App() {
   return (
@@ -19,19 +20,7 @@ function App() {
             <TransferForm />
           </Box>
         </Box>
-        <Sidebar
-          responsive
-          border="left"
-          width="small"
-          height={{ min: "100%" }}
-          header={<Text>Transfer History</Text>}
-        >
-          {["Tx example", "Tx example33", "Tx example3", "Tx example15"].map(
-            (text) => (
-              <Text key={text}>{text}</Text>
-            )
-          )}
-        </Sidebar>
+        <TxHistorySidebar />
       </PageContent>
     </Page>
   );

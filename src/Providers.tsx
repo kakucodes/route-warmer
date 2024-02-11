@@ -7,6 +7,7 @@ import "@interchain-ui/react/styles";
 import { Grommet, grommet } from "grommet";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GasPrice } from "@cosmjs/stargate";
+import { TxHistoryProvider } from "./components/TxHistoryProvider/TxHistoryProvider";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient();
@@ -25,7 +26,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         // walletConnectOptions={} // required if `wallets` contains mobile wallets
       >
         <Grommet theme={grommet} themeMode="dark" full>
-          {children}
+          <TxHistoryProvider>{children}</TxHistoryProvider>
         </Grommet>
       </ChainProvider>
     </QueryClientProvider>

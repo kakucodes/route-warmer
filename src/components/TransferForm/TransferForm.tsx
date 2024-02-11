@@ -1,4 +1,4 @@
-import { useChain, useChainWallet, useWallet } from "@cosmos-kit/react";
+import { useChainWallet } from "@cosmos-kit/react";
 import {
   Box,
   Button,
@@ -16,8 +16,8 @@ import { ChannelSelector } from "./ChannelSelector/ChannelSelector";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FEES, ibc } from "osmojs";
-import { Coin } from "osmojs/dist/codegen/cosmos/base/v1beta1/coin";
+import { ibc } from "osmojs";
+import { useTxHistory } from "../TxHistoryProvider/TxHistoryProvider";
 
 const { transfer } = ibc.applications.transfer.v1.MessageComposer.withTypeUrl;
 
@@ -51,6 +51,7 @@ const schema = yup.object().shape({
 });
 
 export const TransferForm = () => {
+  const { recordTx } = useTxHistory();
   const formMethods = useForm<TransferInputs>({
     defaultValues: {
       sourceChain: { chainName: "migaloo", chainId: "migaloo-1" },
@@ -121,6 +122,27 @@ export const TransferForm = () => {
         setValue("asset", { denom: "", amount: "0" }, { shouldValidate: true });
         setValue("channel", "", { shouldValidate: true });
       }
+
+      recordTx({
+        source: {
+          address: sourceChainUserAddress,
+          chainId: sourceChain.chainId,
+          chainName: sourceChain.chainName,
+        },
+        destination: {
+          address: destinationChainUserAddress,
+          chainId: destinationChain.chainId,
+          chainName: destinationChain.chainName,
+        },
+        txHash: broadcast.transactionHash,
+        code: broadcast.code,
+        timestamp: new Date().toISOString(),
+        asset: {
+          symbol: undefined,
+          ...asset,
+        },
+        channel,
+      });
 
       console.log({ broadcast });
     }
