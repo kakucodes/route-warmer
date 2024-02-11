@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+[![Unit Test](https://github.com/kakucodes/route-warmer/actions/workflows/unitTest.yml/badge.svg)](https://github.com/kakucodes/route-warmer/actions/workflows/unitTest.yml)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Kaku's Route Warmer
 
-## Available Scripts
+Frontend to enable easy discovery and initiation of new ibc routes via custom IBC token transfers.
 
-In the project directory, you can run:
+The channel list will auto-populate with all of the shared channels between the selected chains and the assets dropdown fill generate itself with all of the liquid contents of the selected wallet (cw20 support coming soon).
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Allows sending of arbitrary token transfers.
+- Automatically populates channels with the live shared channels between the selected chains.
+- Automatically displays the entire contents of the connected wallet's balances and refetches the data every 30s to ensure accuracy.
+- Caches chain channels for improved performance.
+- Tracks TX history to improve workflow.
+- Previews token amounts with both 6 and 18 exponents to ensure accurate transfer amounts.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Roadmap
 
-### `npm test`
+While this is a simple proof of concept there are numerous next steps to be tackled given more time/effort.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Allowing urls to control the initial state of the form. This would make the app more composable.
+- Setting up keybindings to focus on the different input fields so to improve efficiency of data entry.
+- Validating/QAing use of cold wallets, evm signing, non-memo transfer chains.
+- Integration testing and more exhaustive unit testing.
 
-### `npm run build`
+## Installation & Dev Server
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install route-warmer with `yarn` and spin up the dev server with `yarn start`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Running Tests
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To run tests, run the following command
 
-### `npm run eject`
+```bash
+  npm run test
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Deployment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Manual deployment shouldn't be necessary as when `main` is updated it will automatically deploy to github pages. If it was needed to be done manually you can simply run:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+  yarn deploy
+```
