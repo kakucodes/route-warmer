@@ -8,7 +8,7 @@ import {
   Text,
 } from "grommet";
 import { Shift } from "grommet-icons";
-import { ChainInfo, useFetchChains } from "../../../hooks/useFetchChains";
+import { ChainInfo } from "../../../hooks/useFetchChains";
 import { useCallback, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -16,10 +16,9 @@ const matchChain = (searchString: string) => (chain: ChainInfo) =>
   chain.chain_name?.toLowerCase().includes(searchString.toLowerCase()) ||
   chain.chain_id?.toLowerCase().includes(searchString.toLowerCase());
 
-export const NetworkSelector = () => {
+export const NetworkSelector = ({ chains }: { chains: ChainInfo[] }) => {
   const { control, setValue, watch } = useFormContext();
   const [displayTestnets, setDisplayTestnets] = useState(false);
-  const { data: chains = [] } = useFetchChains(displayTestnets);
 
   const sourceChainValue = watch("sourceChain");
   const destChainValue = watch("destinationChain");

@@ -2,12 +2,10 @@ import { useChains } from "@cosmos-kit/react";
 import { Box, Button, Text, Image, Spinner } from "grommet";
 import { Connect, Logout } from "grommet-icons";
 
-import { useFetchChains } from "../../hooks/useFetchChains";
+import { ChainInfo, useFetchChains } from "../../hooks/useFetchChains";
 
-export const ConnectButton = () => {
-  const { data: skipChains } = useFetchChains(false);
-
-  const allChains = skipChains
+export const ConnectButton = ({ chains }: { chains: ChainInfo[] }) => {
+  const allChains = chains
     ?.flatMap(({ chain_name }) => (chain_name ? [chain_name] : []))
     // having errors on a handfull of chains here. i suspect it's because of naming discrepancies
     // TODO: no time to dig in now, but should be looked at later
@@ -16,15 +14,15 @@ export const ConnectButton = () => {
         !["lum", "dymension", "secret", "ununifi", "xpla"].includes(name)
     );
 
-  const chains = useChains(allChains || [], true);
+  const walletChains = useChains(allChains || [], true);
   const connected = Object.values(chains).every(
-    (chain) => chain.isWalletConnected
+    (chain) => walletChains.isWalletConnected
   );
 
   if (!allChains) return <Spinner />;
 
   const { connect, disconnect, address, username, wallet, isWalletConnecting } =
-    chains.cosmoshub;
+    walletChains.cosmoshub;
 
   return connected ? (
     <Box direction="row" gap="xsmall" alignContent="center">

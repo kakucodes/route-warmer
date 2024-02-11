@@ -37,7 +37,7 @@ export const fetchChannels = async (chainName: string, key?: string) =>
           .exhaustive()
     );
 
-const toCounterpartyChannelsObj = (
+export const toCounterpartyChannelsObj = (
   allChannels: Record<string, Channel>,
   channel: Channel
 ) => ({

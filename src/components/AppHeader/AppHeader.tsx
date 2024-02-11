@@ -1,5 +1,4 @@
 import { Box, Header, Image, Text } from "grommet";
-import { ConnectButton } from "../ConnectButton/ConnectButton";
 
 export const AppHeader = () => {
   return (
@@ -23,10 +22,6 @@ export const AppHeader = () => {
             Kaku's Route Warmer
           </Text>
         </Header>
-      </Box>
-
-      <Box flex={{ shrink: 1 }}>
-        <ConnectButton />
       </Box>
     </Box>
   );

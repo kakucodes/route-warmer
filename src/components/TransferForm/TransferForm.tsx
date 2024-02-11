@@ -1,4 +1,3 @@
-import { useChainWallet } from "@cosmos-kit/react";
 import {
   Box,
   Button,
@@ -13,51 +12,22 @@ import { NetworkSelector } from "./NetworkSelector/NetworkSelector";
 import { AssetSelector } from "./AssetSelector/AssetSelector";
 
 import { ChannelSelector } from "./ChannelSelector/ChannelSelector";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { ibc } from "osmojs";
-import { useTxHistory } from "../TxHistoryProvider/TxHistoryProvider";
 
-const { transfer } = ibc.applications.transfer.v1.MessageComposer.withTypeUrl;
+import { ChainInfo } from "../../hooks/useFetchChains";
 
-export type TransferInputs = {
-  sourceChain: { chainName: string; chainId: string };
-  destinationChain: { chainName: string; chainId: string };
-  channel: string;
-  asset: {
-    denom: string;
-    amount: string;
-  };
-};
+import { TransferInputs, transferFormSchema } from "./formTypes";
+import { useEnableChains } from "./useEnableChains";
+import { useBroadcastTransfer } from "./useBroadcastTransfer";
 
-const schema = yup.object().shape({
-  sourceChain: yup.object().shape({
-    chainName: yup.string().required(),
-    chainId: yup.string().required(),
-  }),
-  destinationChain: yup.object().shape({
-    chainName: yup.string().required(),
-    chainId: yup.string().required(),
-  }),
-  channel: yup
-    .string()
-    .matches(/channel-\d+/, "Channel must follow the format channel-<number>")
-    .required(),
-  asset: yup.object().shape({
-    denom: yup.string().required(),
-    amount: yup.string().required(),
-  }),
-});
-
-export const TransferForm = () => {
-  const { recordTx } = useTxHistory();
+export const TransferForm = ({ chains }: { chains: ChainInfo[] }) => {
   const formMethods = useForm<TransferInputs>({
     defaultValues: {
       sourceChain: { chainName: "migaloo", chainId: "migaloo-1" },
       destinationChain: { chainName: "stargaze", chainId: "stargaze-1" },
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(transferFormSchema),
     reValidateMode: "onBlur",
   });
 
@@ -70,83 +40,21 @@ export const TransferForm = () => {
 
   const {
     isWalletConnected,
+    connectWallet,
     getSigningStargateClient,
-    address: sourceChainUserAddress,
-  } = useChainWallet(watch("sourceChain.chainName"), "keplr-extension");
-
-  const { address: destinationChainUserAddress } = useChainWallet(
-    watch("destinationChain.chainName"),
-    "keplr-extension"
+    sourceChainUserAddress,
+    destinationChainUserAddress,
+  } = useEnableChains(
+    watch("sourceChain.chainName"),
+    watch("destinationChain.chainName")
   );
 
-  console.log({
-    isWalletConnected,
-    userAddress: sourceChainUserAddress,
+  const { onSubmit } = useBroadcastTransfer({
+    sourceChainUserAddress,
     destinationChainUserAddress,
+    getSigningClient: getSigningStargateClient,
+    setValue,
   });
-
-  const onSubmit: SubmitHandler<TransferInputs> = async ({
-    sourceChain,
-    destinationChain,
-    asset,
-    channel,
-  }) => {
-    if (sourceChainUserAddress && destinationChainUserAddress) {
-      const client = await getSigningStargateClient();
-
-      const currentHeight = await client.getHeight();
-      const currentBlock = await client.getBlock(currentHeight);
-
-      const broadcast = await client.signAndBroadcast(
-        sourceChainUserAddress,
-        [
-          transfer({
-            sender: sourceChainUserAddress,
-            sourcePort: "transfer",
-            sourceChannel: channel,
-            token: asset,
-            receiver: destinationChainUserAddress,
-            timeoutHeight: {
-              revisionNumber: BigInt(currentBlock.header.version.block),
-              revisionHeight: BigInt(currentHeight) + BigInt(1000),
-            },
-            timeoutTimestamp: BigInt(0),
-            memo: "",
-          }),
-        ],
-        "auto",
-        "Transfer courtesy of Kaku's Route Warmer"
-      );
-
-      if (broadcast.code === 0) {
-        setValue("asset", { denom: "", amount: "0" }, { shouldValidate: true });
-        setValue("channel", "", { shouldValidate: true });
-      }
-
-      recordTx({
-        source: {
-          address: sourceChainUserAddress,
-          chainId: sourceChain.chainId,
-          chainName: sourceChain.chainName,
-        },
-        destination: {
-          address: destinationChainUserAddress,
-          chainId: destinationChain.chainId,
-          chainName: destinationChain.chainName,
-        },
-        txHash: broadcast.transactionHash,
-        code: broadcast.code,
-        timestamp: new Date().toISOString(),
-        asset: {
-          symbol: undefined,
-          ...asset,
-        },
-        channel,
-      });
-
-      console.log({ broadcast });
-    }
-  };
 
   return (
     <FormProvider {...formMethods}>
@@ -162,7 +70,7 @@ export const TransferForm = () => {
             pad={{ horizontal: "medium", vertical: "small" }}
             gap="small"
           >
-            <NetworkSelector />
+            <NetworkSelector chains={chains} />
             <ChannelSelector />
             <AssetSelector />
           </CardBody>
@@ -187,7 +95,7 @@ export const TransferForm = () => {
                 type="submit"
               />
             ) : (
-              "Please Connect Wallet" // <ConnectButton />
+              <Button label="Connect Wallet" onClick={connectWallet} />
             )}
           </CardFooter>
         </Card>

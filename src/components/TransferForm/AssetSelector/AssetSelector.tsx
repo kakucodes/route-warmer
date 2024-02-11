@@ -14,7 +14,6 @@ import {
 import { Refresh } from "grommet-icons";
 import { AugmentedBalance } from "../../../utils/fetchBalances/fetchBalances";
 import { useEffect, useMemo } from "react";
-import { match } from "ts-pattern";
 import { Controller, useFormContext } from "react-hook-form";
 import { useChain } from "@cosmos-kit/react";
 import { useFetchBalances } from "../../../hooks/useFetchBalances";

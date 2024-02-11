@@ -1,10 +1,13 @@
-import { Box, Page, PageContent, Sidebar, Text } from "grommet";
+import { Box, Page, PageContent } from "grommet";
 import { AppHeader } from "./components/AppHeader/AppHeader";
 
 import { TransferForm } from "./components/TransferForm/TransferForm";
 import { TxHistorySidebar } from "./components/TxHistorySidebar/TxHistorySidebar";
+import { useFetchChains } from "./hooks/useFetchChains";
 
 function App() {
+  const { data: chains } = useFetchChains(false);
+
   return (
     <Page fill>
       <AppHeader />
@@ -17,7 +20,7 @@ function App() {
           pad="medium"
         >
           <Box width={{ max: "750px" }}>
-            <TransferForm />
+            {chains ? <TransferForm chains={chains} /> : <Box>Loading...</Box>}
           </Box>
         </Box>
         <TxHistorySidebar />
