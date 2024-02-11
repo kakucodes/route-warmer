@@ -76,10 +76,12 @@ export const TransferForm = ({ chains }: { chains: ChainInfo[] }) => {
             pad={{ horizontal: "medium", vertical: "small" }}
           >
             {!!Object.keys(errors).length && isDirty && (
-              <Box>
-                <Text size="small" color="pink">
-                  Errors: {JSON.stringify(errors)}
-                </Text>
+              <Box gap="xsmall">
+                {Object.entries(errors).map(([key, value]) => (
+                  <Text size="small" color="pink">
+                    {key}: {value.message || "Has an error"}
+                  </Text>
+                ))}
               </Box>
             )}
             {isWalletConnected ? (
