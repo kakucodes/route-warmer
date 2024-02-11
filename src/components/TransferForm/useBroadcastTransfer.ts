@@ -30,26 +30,34 @@ export const useBroadcastTransfer = ({
         const currentHeight = await client.getHeight();
         const currentBlock = await client.getBlock(currentHeight);
 
-        const broadcast = await client.signAndBroadcast(
-          sourceChainUserAddress,
-          [
-            transfer({
-              sender: sourceChainUserAddress,
-              sourcePort: "transfer",
-              sourceChannel: channel,
-              token: asset,
-              receiver: destinationChainUserAddress,
-              timeoutHeight: {
-                revisionNumber: BigInt(currentBlock.header.version.block),
-                revisionHeight: BigInt(currentHeight) + BigInt(1000),
-              },
-              timeoutTimestamp: BigInt(0),
-              memo: "",
-            }),
-          ],
-          "auto",
-          "Transfer courtesy of Kaku's Route Warmer"
-        );
+        const broadcast = await client
+          .signAndBroadcast(
+            sourceChainUserAddress,
+            [
+              transfer({
+                sender: sourceChainUserAddress,
+                sourcePort: "transfer",
+                sourceChannel: channel,
+                token: asset,
+                receiver: destinationChainUserAddress,
+                timeoutHeight: {
+                  revisionNumber: BigInt(currentBlock.header.version.block),
+                  revisionHeight: BigInt(currentHeight) + BigInt(1000),
+                },
+                timeoutTimestamp: BigInt(0),
+                memo: "",
+              }),
+            ],
+            "auto",
+            "Transfer courtesy of Kaku's Route Warmer"
+          )
+          .catch((e) => alert(e.toString()));
+
+        // if the broadcast failed let's not record the tx and what
+        // not since it didn't even get on chain
+        if (!broadcast) {
+          return undefined;
+        }
 
         if (broadcast.code === 0) {
           // reset the form if the tx was successful

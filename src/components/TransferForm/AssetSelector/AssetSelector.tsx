@@ -78,7 +78,7 @@ export const AssetSelector = () => {
           </Box>
 
           <Box direction="row" gap="xsmall" justify="between">
-            <Text size="xsmall">bal: {balance.toString()}</Text>
+            <Text size="xsmall">bal: {balance.toLocaleString()}</Text>
             <Box direction="row" gap="xsmall" justify="end">
               {assetInfo?.decimals && (
                 <Tag size="xsmall" name="decimals" value={assetInfo.decimals} />
