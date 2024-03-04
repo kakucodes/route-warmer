@@ -2,7 +2,7 @@ import { P, match } from "ts-pattern";
 import { COSMOS_DIRECTORY_REST } from "../constants";
 import type { Channel, ChannelsResponse } from "./fetchChannels.d";
 
-const CHANNELS_FETCH_LIMIT = 100;
+const CHANNELS_FETCH_LIMIT = 10_000;
 
 /**
  * Fetches the channels for a given chain
